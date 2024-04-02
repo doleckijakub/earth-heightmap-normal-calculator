@@ -1,5 +1,5 @@
 earth-heightmap-normal-calculator: main.c stb.o
-	cc -o $@ $^ -lm
+	cc -Wall -Wextra -pedantic -o $@ $^ -lm
 
 test: earth-heightmap-normal-calculator
 	./earth-heightmap-normal-calculator .github/gebco_08_rev_elev_540x270.png .github/output_540x270.png
