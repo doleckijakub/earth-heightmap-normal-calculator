@@ -54,7 +54,7 @@ int main(int argc, const char **argv) {
 			normalmap[4 * (x + y * w)]     = (normal[0] + 1.0f) * 127.5f;
 			normalmap[4 * (x + y * w) + 1] = (normal[1] + 1.0f) * 127.5f;
 			normalmap[4 * (x + y * w) + 2] = (normal[2] + 1.0f) * 127.5f;
-			normalmap[4 * (x + y * w) + 3] = 255; // heightmap[x + y * w];
+			normalmap[4 * (x + y * w) + 3] = heightmap[x + y * w];
 		}
 
 		if (100 * (y - 1) / h != 100 * y / h) {
