@@ -31,7 +31,9 @@ int main(int argc, const char **argv) {
 			float phi = (float) y / h * M_PI;
 
 			float dx = heightmap[y * w + (x + 1) % w] - heightmap[y * w + (x - 1 + w) % w];
-			float dy = heightmap[((y + 1) % h) * w + x] - heightmap[((y - 1 + h) % h) * w + x];
+			float dy = (y == 0 || y == h - 1) 
+				? 0
+				: heightmap[(y + 1) * w + x] - heightmap[(y - 1) * w + x];
 
 			float normal[3] = {
 				sinf(phi) * cosf(theta) - dx,
