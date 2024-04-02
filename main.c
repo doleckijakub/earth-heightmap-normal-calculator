@@ -27,11 +27,18 @@ int main(int argc, const char **argv) {
 
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
+			float theta = (float) x / w * 2 * M_PI;
+			float phi = (float) y / h * M_PI;
+
 			float dx = heightmap[y * w + (x + 1) % w] - heightmap[y * w + (x - 1 + w) % w];
 			float dy = heightmap[((y + 1) % h) * w + x] - heightmap[((y - 1 + h) % h) * w + x];
 
-			float normal[3] = { -dx, -dy, 1.0f };
-			float length = sqrt(
+			float normal[3] = {
+				sinf(phi) * cosf(theta) - dx,
+				sinf(phi) * sinf(theta) - dy,
+				cosf(phi)
+			};
+			float length = sqrtf(
 				normal[0] * normal[0]
 				+ normal[1] * normal[1]
 				+ normal[2] * normal[2]
