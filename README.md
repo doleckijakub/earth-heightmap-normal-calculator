@@ -1,6 +1,6 @@
 # Earth heightmap normal calulator
 
-A simple tool for creating normal maps from height maps. Used in [this project of mine](https://github.com/doleckijakub/java-game).
+A simple tool for creating normal maps from height maps. Used in [this project of mine](https://github.com/doleckijakub/plane-game).
 
 ## Example usage
 
