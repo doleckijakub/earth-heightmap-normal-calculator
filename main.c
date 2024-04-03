@@ -22,24 +22,16 @@ int main(int argc, const char **argv) {
 
 	int w, h, n;
 	u8 *heightmap = stbi_load(input, &w, &h, &n, 1);
-	assert(n == 1 && "Not grayscale");
 	u8 *normalmap = calloc(w * h, 4);
 
 	for (int y = 0; y < h; y++) {
 		for (int x = 0; x < w; x++) {
-			float theta = (float) x / w * 2 * M_PI;
-			float phi = (float) y / h * M_PI;
-
-			float dx = heightmap[y * w + (x + 1) % w] - heightmap[y * w + (x - 1 + w) % w];
+			float dx = heightmap[n * (y * w + (x + 1) % w)] - heightmap[n * (y * w + (x - 1 + w) % w)];
 			float dy = (y == 0 || y == h - 1) 
 				? 0
-				: heightmap[(y + 1) * w + x] - heightmap[(y - 1) * w + x];
+				: heightmap[n * ((y + 1) * w + x)] - heightmap[n * ((y - 1) * w + x)];
 
-			float normal[3] = {
-				sinf(phi) * cosf(theta) - dx,
-				sinf(phi) * sinf(theta) - dy,
-				cosf(phi)
-			};
+			float normal[3] = { -dx, -dy, 1 };
 			float length = sqrtf(
 				normal[0] * normal[0]
 				+ normal[1] * normal[1]
@@ -54,7 +46,7 @@ int main(int argc, const char **argv) {
 			normalmap[4 * (x + y * w)]     = (normal[0] + 1.0f) * 127.5f;
 			normalmap[4 * (x + y * w) + 1] = (normal[1] + 1.0f) * 127.5f;
 			normalmap[4 * (x + y * w) + 2] = (normal[2] + 1.0f) * 127.5f;
-			normalmap[4 * (x + y * w) + 3] = heightmap[x + y * w];
+			normalmap[4 * (x + y * w) + 3] = heightmap[n * (x + y * w)];
 		}
 
 		if (100 * (y - 1) / h != 100 * y / h) {
